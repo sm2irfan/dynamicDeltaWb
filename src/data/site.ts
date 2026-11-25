@@ -11,7 +11,7 @@ export const company = {
   chairman: 'Abdullah Mohammad Abdalla',
   address: 'Citadel Tower, Office No. 1403, Business Bay, Dubai, UAE',
   poBox: 'P.O. Box 86243, Dubai, UAE',
-  phones: ['+971 4 578 6674', '+971 4 572 6926'],
+  phones: ['+971 4 269 2659', '+971 4 572 6926'],
   email: 'info@dynamicdelta.net',
   hours: 'Mon – Sat · 08:00 – 17:00',
 }

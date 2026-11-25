@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom'
-import logoImage from '../assets/images/logo_latest.png'
+import { Link, useLocation } from 'react-router-dom'
+import logoImage from '../assets/images/logo_svg.svg'
+// Same artwork with a white "Since 2005", for the dark heroes on inner pages
+import logoImageWhite from '../assets/images/logo_svg_white.svg'
 
 /**
  * The Dynamic Delta spiral, hand-authored from the brand mark.
@@ -20,10 +22,13 @@ export function DeltaMark({ className = '' }: { className?: string }) {
 
 /** Brand plaque — the original logo artwork, on a transparent background. */
 export function Logo() {
+  const { pathname } = useLocation()
+  const isHome = pathname === '/'
+
   return (
     <Link to="/" aria-label="Dynamic Delta — home" className="group block h-17 md:h-21">
       <img
-        src={logoImage}
+        src={isHome ? logoImage : logoImageWhite}
         alt="Dynamic Delta — since 2005"
         className="h-full w-auto object-contain transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-105"
       />

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 450" width="100%" height="100%">
+  <defs>
+    <style>
+      .brand-red { fill: #A62B1F; }
+      .main-text {
+        fill: #FFFFFF;
+        font-family: Georgia, "Times New Roman", Times, serif;
+        font-size: 98px;
+        font-weight: 500;
+        letter-spacing: -0.5px;
+      }
+      .sub-text {
+        fill: #A62B1F;
+        font-family: "Trebuchet MS", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-size: 36px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+    </style>
+  </defs>
+
+  
+  <path class="brand-red" fill-rule="evenodd" d="
+    M 235, 38
+    A 112,112 0 1,0 235, 262
+    A 112,112 0 1,0 235, 38
+    Z
+    M 225, 92
+    A 64,64 0 1,1 225, 220
+    A 64,64 0 1,1 225, 92
+    Z" />
+
+  
+  <path class="brand-red" d="
+    M 55, 212
+    C 145, 295 315, 295 352, 178
+    C 356, 164 358, 150 356, 134
+    L 1140, 134
+    L 1140, 292
+    C 820, 276 540, 326 305, 322
+    C 175, 318 98, 272 55, 212
+    Z" />
+
+  
+  <text x="398" y="250" class="main-text">Dynamic Delta</text>
+
+  
+  <text x="892" y="346" class="sub-text">Since 2005</text>
+</svg>

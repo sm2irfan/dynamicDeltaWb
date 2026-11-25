@@ -15,7 +15,7 @@ const HERO_LINES = [
     delay: 470,
     content: (
       <>
-        <span className="text-brand-lit italic">the</span> standard
+        <span className="text-brand-deep italic">the</span> standard
       </>
     ),
   },
@@ -32,11 +32,11 @@ function Hero() {
           <img
             src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80"
             alt=""
-            className="ken-burns h-full w-full object-cover"
+            className="ken-burns h-full w-full object-cover opacity-60"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-paper via-paper/90 to-paper/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-paper via-transparent to-paper/60" />
       </div>
 
       {/* Drifting gold glow for bold-corporate depth */}
@@ -44,12 +44,12 @@ function Hero() {
 
       <div className="relative mx-auto w-full max-w-7xl px-6 pt-32 pb-24 md:px-10">
         <div className="rise" style={cssVars({ '--rise-delay': '200ms' })}>
-          <span className="eyebrow bg-paper/15 text-brand-lit ring-1 ring-paper/25">
+          <span className="eyebrow">
             Established {company.founded} · Dubai, UAE
           </span>
         </div>
 
-        <h1 className="display mt-8 text-4xl text-paper sm:text-6xl md:text-8xl lg:text-[7.5rem]">
+        <h1 className="display mt-8 text-4xl text-ink sm:text-6xl md:text-8xl lg:text-[7.5rem]">
           {HERO_LINES.map((line, i) => (
             <span key={i} className="rise" style={cssVars({ '--rise-delay': `${line.delay}ms` })}>
               <span>{line.content}</span>
@@ -58,17 +58,17 @@ function Hero() {
         </h1>
 
         <div className="reveal is-visible mt-10 max-w-lg" style={{ transitionDelay: '900ms' }}>
-          <p className="text-lg leading-relaxed text-paper/70">
+          <p className="text-lg leading-relaxed text-ink-dim">
             Two decades of electromechanical, automation and turnkey MEP delivery across the Gulf —
             built on the promise of{' '}
-            <span className="font-semibold text-paper">
+            <span className="font-semibold text-ink">
               quality you deserve, and dependability you can count on.
             </span>
           </p>
 
           <div className="mt-10 flex flex-wrap gap-4">
             <Button to="/projects">View Our Work</Button>
-            <Button to="/contact" variant="ghost" className="!border-paper/30 !bg-paper/10 !text-paper hover:!border-brand-lit">
+            <Button to="/contact" variant="ghost">
               Start a Project
             </Button>
           </div>

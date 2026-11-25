@@ -66,7 +66,7 @@ function Navbar() {
             <a
               href={telHref(company.phones[0])}
               className={`hidden text-sm font-semibold transition-colors xl:block ${
-                scrolled
+                scrolled || pathname === '/'
                   ? 'text-ink-dim hover:text-brand-deep'
                   : 'text-paper drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)] hover:text-brand-lit'
               }`}

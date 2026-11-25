@@ -3,21 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://sm2irfan.github.io/website/newdesign",
+  "homepage": "https://sm2irfan.github.io/dynamicDeltaWb/",
   "scripts": {
     "dev": "vite",
-    "dev:newdesign": "vite --base=/website/newdesign/",
     "build": "tsc -b && vite build",
-    "build:newdesign": "tsc -b && vite build --base=/website/newdesign/",
     "lint": "oxlint",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
-    "predeploy:newdesign": "npm run build:newdesign",
-    "deploy:newdesign": "gh-pages -d dist --dest newdesign --add",
-    "build:live": "tsc -b && vite build --base=/dynamicDeltaWb/",
-    "predeploy:live": "npm run build:live",
-    "deploy:live": "gh-pages -d dist -r https://github.com/sm2irfan/dynamicDeltaWb.git -m \"Deploy site\""
+    "deploy": "gh-pages -d dist -m \"Deploy site\""
   },
   "dependencies": {
     "lenis": "^1.3.25",

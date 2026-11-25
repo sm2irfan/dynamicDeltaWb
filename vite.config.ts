@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/website/',
+  base: '/dynamicDeltaWb/', // GitHub Pages project path: https://sm2irfan.github.io/dynamicDeltaWb/
   plugins: [react(), tailwindcss()],
   server: {
     host: true, // listen on the LAN, so `npm run dev` alone is enough

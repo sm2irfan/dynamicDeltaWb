@@ -32,7 +32,7 @@ function Projects() {
               onClick={() => setFilter(sector)}
               className={`rounded-full border px-6 py-3 text-sm font-semibold transition-all duration-300 ${
                 filter === sector
-                  ? 'brand-gradient border-transparent text-ink shadow-md'
+                  ? 'brand-gradient border-transparent text-paper shadow-md'
                   : 'border-line text-ink-dim hover:border-brand hover:text-ink'
               }`}
             >

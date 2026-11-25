@@ -20,7 +20,7 @@ export function NumberedCard({
 }) {
   return (
     <>
-      <span className="brand-gradient inline-flex h-10 w-10 items-center justify-center rounded-xl text-xs font-bold text-ink">
+      <span className="brand-gradient inline-flex h-10 w-10 items-center justify-center rounded-xl text-xs font-bold text-paper">
         {pad(index)}
       </span>
       <h3 className="display mt-6 text-2xl">{title}</h3>

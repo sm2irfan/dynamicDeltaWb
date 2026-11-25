@@ -58,7 +58,7 @@ const BASE =
 
 const VARIANTS: Record<Variant, string> = {
   solid:
-    'brand-gradient text-ink shadow-[0_16px_35px_-12px_rgba(200,164,77,0.55)] hover:shadow-[0_20px_45px_-12px_rgba(166,38,25,0.5)] hover:-translate-y-0.5',
+    'brand-gradient text-paper shadow-[0_16px_35px_-12px_rgba(166,43,31,0.55)] hover:shadow-[0_20px_45px_-12px_rgba(166,38,25,0.5)] hover:-translate-y-0.5',
   ghost:
     'border-2 border-ink/10 bg-surface text-ink hover:border-brand hover:-translate-y-0.5 hover:shadow-lg',
 }

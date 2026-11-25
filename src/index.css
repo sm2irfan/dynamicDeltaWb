@@ -2,8 +2,8 @@
 
 /* ------------------------------------------------------------------
    Dynamic Delta Group — design tokens
-   Palette: bold modern corporate — warm paper base, brass-gold accent,
-            deep red for gradient punch.
+   Palette: bold modern corporate — warm paper base, logo-red accent
+            (#A62B1F, taken from the Dynamic Delta mark).
    Type:    Sora (display, bold geometric) · Inter (UI) · JetBrains Mono (tags)
 ------------------------------------------------------------------- */
 @theme {
@@ -16,11 +16,11 @@
   --color-ink: #17140f;
   --color-ink-dim: #6c6353;
 
-  /* Brushed-brass gold, the primary accent. Deep red powers gradients
-     and hover states so the palette still reads as "brand", not generic. */
-  --color-brand: #c8a44d;
-  --color-brand-lit: #e6c777;
-  --color-brand-deep: #a62619;
+  /* Logo red, the primary accent. `brand-deep` is the exact logo red and
+     carries text accents; `brand-lit` is a brighter red for dark backgrounds. */
+  --color-brand: #c0392b;
+  --color-brand-lit: #e35d4f;
+  --color-brand-deep: #a62b1f;
 
   --color-line: #e9e1cd;
 
@@ -29,7 +29,7 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --shadow-brand: 0 20px 45px -15px rgba(200, 164, 77, 0.45);
+  --shadow-brand: 0 20px 45px -15px rgba(166, 43, 31, 0.45);
 }
 
 @layer base {
@@ -99,12 +99,12 @@
     background: var(--color-line);
   }
 
-  /* Gold → deep-red diagonal gradient used on primary CTAs and accents */
+  /* Bright-red → logo-red diagonal gradient used on primary CTAs and accents */
   .brand-gradient {
     background: linear-gradient(135deg, var(--color-brand-lit), var(--color-brand) 55%, var(--color-brand-deep));
   }
 
-  /* Soft radial gold glow, dropped behind hero/CTA blocks for depth */
+  /* Soft radial red glow, dropped behind hero/CTA blocks for depth */
   .brand-glow {
     background: radial-gradient(closest-side, color-mix(in srgb, var(--color-brand) 35%, transparent), transparent);
   }

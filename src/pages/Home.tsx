@@ -32,11 +32,12 @@ function Hero() {
           <img
             src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80"
             alt=""
-            className="ken-burns h-full w-full object-cover opacity-60"
+            className="ken-burns h-full w-full object-cover"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-paper via-paper/90 to-paper/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-paper via-transparent to-paper/60" />
+        {/* Light wash: solid behind the text on the left, fading out so the photo shows on the right */}
+        <div className="absolute inset-0 bg-gradient-to-r from-paper/95 via-paper/75 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-paper/80 via-transparent to-paper/30" />
       </div>
 
       {/* Drifting gold glow for bold-corporate depth */}
@@ -306,13 +307,13 @@ function CallToAction() {
         <div className="brand-gradient relative overflow-hidden rounded-[2.5rem] px-6 py-24 text-center shadow-2xl md:px-16 md:py-32">
           <div className="drift pointer-events-none absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-ink/10 blur-3xl" />
           <Reveal>
-            <p className="eyebrow mx-auto justify-center border-ink/20 bg-ink/10 text-ink">
+            <p className="eyebrow mx-auto justify-center border-paper/30 bg-paper/15 text-paper">
               Let&rsquo;s Build
             </p>
-            <h2 className="display mx-auto mt-8 max-w-4xl text-3xl text-ink sm:text-5xl md:text-7xl">
+            <h2 className="display mx-auto mt-8 max-w-4xl text-3xl text-paper sm:text-5xl md:text-7xl">
               Tell us what you need <span className="italic">engineered.</span>
             </h2>
-            <p className="mx-auto mt-8 max-w-xl leading-relaxed text-ink/80">
+            <p className="mx-auto mt-8 max-w-xl leading-relaxed text-paper/85">
               From a single system to a full turnkey package — our engineers will scope it, price it
               honestly, and deliver it on the date we promised.
             </p>
@@ -326,7 +327,7 @@ function CallToAction() {
               </Link>
               <Link
                 to="/services"
-                className="inline-flex items-center gap-3 rounded-full border-2 border-ink/25 px-8 py-4 text-sm font-bold text-ink transition-colors duration-300 hover:border-ink"
+                className="inline-flex items-center gap-3 rounded-full border-2 border-paper/40 px-8 py-4 text-sm font-bold text-paper transition-colors duration-300 hover:border-paper"
               >
                 Explore Capabilities
               </Link>

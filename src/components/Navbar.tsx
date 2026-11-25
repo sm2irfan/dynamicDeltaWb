@@ -43,7 +43,9 @@ function Navbar() {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
-          <Logo />
+          {/* White tagline only while the bar is clear over an inner page's dark hero;
+              the light scrolled bar, the light Home hero and the open menu all get red. */}
+          <Logo onDark={pathname !== '/' && !scrolled && !menuOpen} />
 
           <nav className="hidden items-center gap-2 rounded-full border border-line bg-surface/80 p-1.5 shadow-sm backdrop-blur-sm lg:flex">
             {nav.map((link) => (
@@ -53,7 +55,7 @@ function Navbar() {
                 end={link.to === '/'}
                 className={({ isActive }) =>
                   `rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 ${
-                    isActive ? 'brand-gradient text-ink shadow' : 'text-ink-dim hover:text-ink'
+                    isActive ? 'brand-gradient text-paper shadow' : 'text-ink-dim hover:text-ink'
                   }`
                 }
               >
@@ -76,7 +78,7 @@ function Navbar() {
 
             <Link
               to="/contact"
-              className="brand-gradient hidden rounded-full px-5 py-2.5 text-sm font-bold text-ink shadow-[0_10px_25px_-10px_rgba(200,164,77,0.6)] transition-transform duration-300 hover:-translate-y-0.5 md:block"
+              className="brand-gradient hidden rounded-full px-5 py-2.5 text-sm font-bold text-paper shadow-[0_10px_25px_-10px_rgba(166,43,31,0.6)] transition-transform duration-300 hover:-translate-y-0.5 md:block"
             >
               Get a Quote
             </Link>

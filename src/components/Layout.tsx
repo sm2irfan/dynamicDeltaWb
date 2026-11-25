@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import ScrollProgress from './ScrollProgress'
+import CursorEffects from './CursorEffects'
 import { acquireLenis, getLenis, releaseLenis } from '../lib/lenis'
 
 function Layout() {
@@ -27,6 +28,7 @@ function Layout() {
   return (
     <div className="flex min-h-screen flex-col bg-paper">
       <ScrollProgress />
+      <CursorEffects />
       <Navbar />
       <main className="flex-1">
         <Outlet />

@@ -42,7 +42,7 @@ function Navbar() {
             : 'border-b border-transparent'
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
+        <div className="mx-auto flex max-w-screen-2xl items-center justify-between px-6 py-5 md:px-10">
           {/* White tagline only while the bar is clear over an inner page's dark hero;
               the light scrolled bar, the light Home hero and the open menu all get red. */}
           <Logo onDark={pathname !== '/' && !scrolled && !menuOpen} />
@@ -78,6 +78,7 @@ function Navbar() {
 
             <Link
               to="/contact"
+              data-magnetic
               className="brand-gradient hidden rounded-full px-5 py-2.5 text-sm font-bold text-paper shadow-[0_10px_25px_-10px_rgba(166,43,31,0.6)] transition-transform duration-300 hover:-translate-y-0.5 md:block"
             >
               Get a Quote
@@ -86,10 +87,11 @@ function Navbar() {
             {/* Two bars that cross into an X while the overlay is open */}
             <button
               type="button"
+              data-magnetic
               onClick={() => setMenuOpen((v) => !v)}
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
-              className="group relative z-50 flex h-11 w-11 flex-col items-center justify-center gap-2 rounded-full border border-line bg-surface shadow-sm"
+              className="group relative z-50 flex h-11 w-11 flex-col items-center justify-center gap-2 rounded-full border border-line bg-surface shadow-sm transition-transform duration-300 ease-out"
             >
               <span
                 className={`h-0.5 w-5 rounded-full bg-ink transition-all duration-400 ${

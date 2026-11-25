@@ -314,9 +314,212 @@
   animation: footer-shimmer-sweep 5s linear infinite;
 }
 
+/* ------------------------- mouse-hover effects -------------------------
+   Driven by <CursorEffects>, which only runs for a real mouse and never
+   under reduced motion; the pure-CSS parts are switched off below too.
+------------------------------------------------------------------------ */
+
+/* Viewfinder: four corner brackets that trail the cursor and snap out to
+   frame buttons and links. Position and size are written per frame in JS,
+   so only colour/opacity/corner length transition here. */
+.cursor-finder {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.cursor-finder.is-visible {
+  opacity: 1;
+}
+
+.cursor-finder-corner {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-color: var(--color-brand);
+  border-style: solid;
+  border-width: 0;
+  transition:
+    width 0.4s var(--ease-out-expo),
+    height 0.4s var(--ease-out-expo),
+    border-color 0.3s ease,
+    opacity 0.3s ease;
+}
+.cursor-finder-corner:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-top-width: 2px;
+  border-left-width: 2px;
+}
+.cursor-finder-corner:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-top-width: 2px;
+  border-right-width: 2px;
+}
+.cursor-finder-corner:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+}
+.cursor-finder-corner:nth-child(4) {
+  bottom: 0;
+  right: 0;
+  border-bottom-width: 2px;
+  border-right-width: 2px;
+}
+
+/* Tiny centre mark, shown only while roaming */
+.cursor-finder-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 3px;
+  margin: -1.5px 0 0 -1.5px;
+  border-radius: 999px;
+  background: var(--color-brand);
+  transition: opacity 0.25s ease;
+}
+
+/* Locked on to a button/link: longer brackets, no centre mark */
+.cursor-finder.is-locked .cursor-finder-corner {
+  width: 12px;
+  height: 12px;
+  border-color: var(--color-brand-deep);
+}
+.cursor-finder.is-locked .cursor-finder-dot {
+  opacity: 0;
+}
+
+/* Over a large clickable area (e.g. a whole card): brackets brighten instead */
+.cursor-finder.is-hovering .cursor-finder-corner {
+  border-color: var(--color-brand-lit);
+}
+
+/* Click: brackets briefly shorten, like a shutter */
+.cursor-finder.is-pressed .cursor-finder-corner {
+  width: 4px;
+  height: 4px;
+}
+
+@layer components {
+/* Light sweep across red gradient buttons on hover */
+a.brand-gradient,
+button.brand-gradient {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+a.brand-gradient::after,
+button.brand-gradient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+a.brand-gradient:hover::after,
+button.brand-gradient:hover::after {
+  transform: translateX(120%);
+  transition: transform 0.9s var(--ease-out-expo);
+}
+
+/* Soft red spotlight inside cards that tracks the cursor (--mx/--my set in JS) */
+.card {
+  position: relative;
+  isolation: isolate;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    22rem circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--color-brand) 12%, transparent),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out-expo);
+  pointer-events: none;
+}
+.card:hover::before {
+  opacity: 1;
+}
+
+/* Logo hover (see <Logo>): the ring spins one full turn — its off-centre
+   hole orbits — and comes to rest exactly where it started, hole low inside
+   the ring as in the brand mark. A light streak runs along the red band, and
+   both lines of text open up their letter-spacing. */
+.logo-ring {
+  transform-box: view-box;
+  transform-origin: 235px 150px; /* centre of the ring's outer circle */
+}
+.logo:hover .logo-ring,
+.logo:focus-visible .logo-ring {
+  animation: logo-ring-spin 1.1s var(--ease-out-expo);
+}
+@keyframes logo-ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg); /* a full turn lands back on the resting pose */
+  }
+}
+
+.logo-shine {
+  transform: translateX(0);
+}
+.logo:hover .logo-shine,
+.logo:focus-visible .logo-shine {
+  transform: translateX(1500px);
+  transition: transform 1.2s var(--ease-out-expo) 0.1s;
+}
+
+.logo-word,
+.logo-tagline {
+  letter-spacing: -0.5px;
+  transition: letter-spacing 0.6s var(--ease-out-expo);
+}
+.logo:hover .logo-word,
+.logo:focus-visible .logo-word {
+  letter-spacing: 1.5px; /* the wordmark nearly fills the band; keep it inside */
+}
+.logo:hover .logo-tagline,
+.logo:focus-visible .logo-tagline {
+  letter-spacing: 3px;
+}
+
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .cursor-finder,
+  a.brand-gradient::after,
+  button.brand-gradient::after,
+  .logo-shine {
+    display: none;
+  }
+  .logo-ring,
+  .logo-word,
+  .logo-tagline {
+    transition: none !important;
+    transform: none !important;
   }
   .reveal,
   .stat-label-text,

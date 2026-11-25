@@ -90,11 +90,11 @@ export function Button({
   )
 
   return to ? (
-    <Link to={to} className={classes}>
+    <Link to={to} className={classes} data-magnetic>
       {body}
     </Link>
   ) : (
-    <button type={type} className={classes}>
+    <button type={type} className={classes} data-magnetic>
       {body}
     </button>
   )

@@ -26,6 +26,13 @@ export function acquireLenis(): Lenis | null {
       easing: (t: number) => 1 - Math.pow(1 - t, 3),
     })
     rafId = requestAnimationFrame(raf)
+
+    // Web fonts finish loading after Lenis's first measurement, reflowing
+    // text and changing the page's true height. Without this, Lenis's
+    // cached scroll limit stays shorter than reality — wheel/touch scroll
+    // gets stuck short of the actual bottom of the page (e.g. the footer's
+    // last row is never reachable), even though scrollHeight is correct.
+    document.fonts?.ready.then(() => instance?.resize())
   }
   return instance
 }

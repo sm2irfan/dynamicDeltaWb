@@ -253,6 +253,67 @@
   animation: drift 18s ease-in-out infinite;
 }
 
+/* A second drift cycle, offset in timing/direction so two blobs sharing a
+   section never move in lockstep. */
+@keyframes drift-alt {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-5%, 5%) scale(1.12);
+  }
+}
+.drift-alt {
+  animation: drift-alt 22s ease-in-out infinite;
+}
+
+/* Plain mount-triggered fade — not scroll-triggered. Used for content right
+   at the document's absolute bottom edge (e.g. the footer's last row),
+   where a transform-based scroll-Reveal can deadlock: while un-revealed it
+   stays shifted via translateY/scale, and that offset itself can push it
+   just out of the page's reachable scroll range, so it never gets the
+   chance to intersect and reveal itself. */
+@keyframes footer-bar-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.footer-bar {
+  animation: footer-bar-in 0.8s var(--ease-out-expo) both;
+  animation-delay: 0.3s;
+}
+
+/* Continuously sweeping gradient line along the footer's top edge — always
+   running whenever the footer is on screen, independent of scroll state. */
+@keyframes footer-shimmer-sweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.footer-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-brand-deep) 15%,
+    var(--color-brand) 35%,
+    var(--color-brand-lit) 50%,
+    var(--color-brand) 65%,
+    var(--color-brand-deep) 85%,
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: footer-shimmer-sweep 5s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -263,7 +324,10 @@
   .rise > span,
   .ken-burns,
   .marquee-track,
-  .drift {
+  .drift,
+  .drift-alt,
+  .footer-bar,
+  .footer-shimmer {
     animation: none !important;
     transition: none !important;
     opacity: 1 !important;

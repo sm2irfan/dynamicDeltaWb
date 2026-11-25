@@ -1,7 +1,7 @@
 import { useState, type FormEvent, type ReactNode } from 'react'
 import Reveal from '../components/Reveal'
 import { Button, Eyebrow, PageHero, Section } from '../components/ui'
-import logoImage from '../assets/images/logo_latest.png'
+import logoImage from '../assets/images/logo_svg.svg'
 import { company, services } from '../data/site'
 import { mailHref, telHref } from '../lib/utils'
 
@@ -161,7 +161,7 @@ function Contact() {
             {/* Map placeholder — drop in an embed once the client provides one */}
             <div className="card brand-glow mt-8 flex aspect-[16/10] items-center justify-center overflow-hidden bg-paper-soft">
               <div className="text-center">
-                <img src={logoImage} alt="Dynamic Delta" className="mx-auto h-12 w-auto object-contain" />
+                <img src={logoImage} alt="Dynamic Delta — since 2005" className="mx-auto h-20 w-auto object-contain" />
                 <p className="mt-4 text-xs font-bold uppercase tracking-wide text-ink-dim">
                   {company.address}
                 </p>

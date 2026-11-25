@@ -1,3 +1,5 @@
+import gasImage from '../assets/images/gas.jpg'
+
 /**
  * Single source of truth for site copy. Swapping in final client-approved
  * content means editing this file only — pages read from it.
@@ -61,7 +63,7 @@ export const services = [
     summary:
       'Design, installation and maintenance of centralised LPG networks for residential, hospitality and industrial clients.',
     points: ['Centralised Networks', 'Storage & Bulk Supply', 'Safety Certification', 'Scheduled Maintenance'],
-    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1600&q=80',
+    image: gasImage,
   },
   {
     id: 'interiors',

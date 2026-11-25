@@ -7,18 +7,28 @@ const INTERACTIVE = 'a, button, [role="button"], input, select, textarea, label,
 const REST_SIZE = 26
 /** Breathing room between a locked element and the brackets, in px. */
 const LOCK_PAD = 8
-/** Elements bigger than this (e.g. whole-card links) aren't framed — too large to read as a target. */
-const MAX_LOCK_W = 420
+/**
+ * Elements bigger than this aren't framed — too large to read as a target.
+ * Wide enough for the Home "Capabilities" rows; tall project-card links stay out.
+ */
+const MAX_LOCK_W = 1000
 const MAX_LOCK_H = 160
 
 /**
- * Follow speed: the fraction of the remaining distance covered each frame.
- * Lower = the brackets lag further behind the mouse.
+ * Spring that pulls the brackets toward the mouse (per 60fps frame).
+ *  - STIFFNESS: how hard it pulls. Lower = arrives later after a fast move.
+ *  - DAMPING: velocity kept each frame. Higher = more glide and a small
+ *    overshoot before it settles; lower = stops dead.
+ * Locking on to a button uses a firmer spring so framing still feels snappy.
  */
-const FOLLOW_ROAM = 0.09
-const FOLLOW_LOCK = 0.16
-/** Tilt (deg) per px of lag while roaming, and its cap — the "dragged along" lean. */
-const TILT_PER_PX = 0.35
+const ROAM_STIFFNESS = 0.035
+const ROAM_DAMPING = 0.8
+const LOCK_STIFFNESS = 0.09
+const LOCK_DAMPING = 0.68
+/** Box size (resting ↔ framing a button) eases at this rate per frame. */
+const RESIZE_EASE = 0.16
+/** Tilt (deg) per px/frame of horizontal speed, and its cap — the "dragged along" lean. */
+const TILT_PER_SPEED = 0.9
 const MAX_TILT = 28
 
 /** How far a [data-magnetic] element leans toward the cursor (fraction of offset). */
@@ -49,8 +59,11 @@ function CursorEffects() {
     let y = pointerY
     let w = REST_SIZE
     let h = REST_SIZE
+    let vx = 0
+    let vy = 0
     let tilt = 0
     let frame = 0
+    let last = performance.now()
     let locked: HTMLElement | null = null
     let magnet: HTMLElement | null = null
 
@@ -60,9 +73,13 @@ function CursorEffects() {
       magnet = null
     }
 
-    // Each frame, ease toward either the pointer or the locked element's box.
+    // Each frame, spring toward either the pointer or the locked element's box.
     // Re-reading the box every frame keeps the frame glued on while scrolling.
-    const tick = () => {
+    const tick = (now: number) => {
+      // Normalise to 60fps steps so 120Hz screens don't make it twice as fast
+      const steps = Math.min((now - last) / (1000 / 60), 4)
+      last = now
+
       let tx = pointerX
       let ty = pointerY
       let tw = REST_SIZE
@@ -74,16 +91,21 @@ function CursorEffects() {
         tw = r.width + LOCK_PAD * 2
         th = r.height + LOCK_PAD * 2
       }
-      const ease = locked ? FOLLOW_LOCK : FOLLOW_ROAM
-      const lagX = tx - x
-      x += lagX * ease
-      y += (ty - y) * ease
-      w += (tw - w) * ease
-      h += (th - h) * ease
+      const stiffness = locked ? LOCK_STIFFNESS : ROAM_STIFFNESS
+      const damping = locked ? LOCK_DAMPING : ROAM_DAMPING
+      const keep = Math.pow(damping, steps)
+      vx = (vx + (tx - x) * stiffness * steps) * keep
+      vy = (vy + (ty - y) * stiffness * steps) * keep
+      x += vx * steps
+      y += vy * steps
 
-      // Lean into horizontal movement while roaming; straighten up when locked or at rest
-      const targetTilt = locked ? 0 : Math.max(-MAX_TILT, Math.min(MAX_TILT, lagX * TILT_PER_PX))
-      tilt += (targetTilt - tilt) * 0.15
+      const resize = 1 - Math.pow(1 - RESIZE_EASE, steps)
+      w += (tw - w) * resize
+      h += (th - h) * resize
+
+      // Lean into horizontal speed while roaming; straighten up when locked or at rest
+      const targetTilt = locked ? 0 : Math.max(-MAX_TILT, Math.min(MAX_TILT, vx * TILT_PER_SPEED))
+      tilt += (targetTilt - tilt) * (1 - Math.pow(0.85, steps))
 
       finder.style.transform = `translate3d(${x - w / 2}px, ${y - h / 2}px, 0) rotate(${tilt}deg)`
       finder.style.width = `${w}px`
@@ -95,6 +117,13 @@ function CursorEffects() {
       if (e.pointerType !== 'mouse') return
       pointerX = e.clientX
       pointerY = e.clientY
+      // First sighting (page load, or re-entering the window): start at the
+      // pointer instead of springing in from off-screen
+      if (!finder.classList.contains('is-visible')) {
+        x = pointerX
+        y = pointerY
+        vx = vy = 0
+      }
       finder.classList.add('is-visible')
 
       const el = e.target instanceof Element ? e.target : null

@@ -29,8 +29,11 @@
 
       var l = window.location
       var segments = l.pathname.split('/').filter(Boolean) // e.g. ['website'] or ['website','preview','about']
-      var base =
-        SUBFOLDER_APPS.indexOf(segments[1]) !== -1 ? '/website/' + segments[1] + '/' : '/website/'
+      // The first segment is the GitHub Pages project (repo) name, so this
+      // same file works wherever the app is published: /website/,
+      // /dynamic-delta/, or any other repo.
+      var repo = '/' + segments[0] + '/'
+      var base = SUBFOLDER_APPS.indexOf(segments[1]) !== -1 ? repo + segments[1] + '/' : repo
 
       fetch(base + 'index.html')
         .then(function (r) {

@@ -42,7 +42,7 @@ function Navbar() {
             : 'border-b border-transparent'
         }`}
       >
-        <div className="mx-auto flex max-w-screen-2xl items-center justify-between px-6 py-5 md:px-10">
+        <div className="mx-auto flex max-w-[88rem] items-center justify-between px-6 py-5 md:px-10">
           {/* White tagline only while the bar is clear over an inner page's dark hero;
               the light scrolled bar, the light Home hero and the open menu all get red. */}
           <Logo onDark={pathname !== '/' && !scrolled && !menuOpen} />

@@ -43,7 +43,7 @@ function Hero() {
       {/* Drifting gold glow for bold-corporate depth */}
       <div className="drift pointer-events-none absolute -top-32 right-[-10%] h-[36rem] w-[36rem] rounded-full brand-glow blur-3xl" />
 
-      <div className="relative mx-auto w-full max-w-screen-2xl px-6 pt-32 pb-24 md:px-10">
+      <div className="relative mx-auto w-full max-w-[88rem] px-6 pt-32 pb-24 md:px-10">
         <div className="rise" style={cssVars({ '--rise-delay': '200ms' })}>
           <span className="eyebrow">
             Established {company.founded} · Dubai, UAE

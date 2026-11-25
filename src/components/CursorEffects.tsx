@@ -11,6 +11,16 @@ const LOCK_PAD = 8
 const MAX_LOCK_W = 420
 const MAX_LOCK_H = 160
 
+/**
+ * Follow speed: the fraction of the remaining distance covered each frame.
+ * Lower = the brackets lag further behind the mouse.
+ */
+const FOLLOW_ROAM = 0.09
+const FOLLOW_LOCK = 0.16
+/** Tilt (deg) per px of lag while roaming, and its cap — the "dragged along" lean. */
+const TILT_PER_PX = 0.35
+const MAX_TILT = 28
+
 /** How far a [data-magnetic] element leans toward the cursor (fraction of offset). */
 const MAGNET_PULL = 0.3
 
@@ -39,6 +49,7 @@ function CursorEffects() {
     let y = pointerY
     let w = REST_SIZE
     let h = REST_SIZE
+    let tilt = 0
     let frame = 0
     let locked: HTMLElement | null = null
     let magnet: HTMLElement | null = null
@@ -63,12 +74,18 @@ function CursorEffects() {
         tw = r.width + LOCK_PAD * 2
         th = r.height + LOCK_PAD * 2
       }
-      const ease = locked ? 0.25 : 0.2
-      x += (tx - x) * ease
+      const ease = locked ? FOLLOW_LOCK : FOLLOW_ROAM
+      const lagX = tx - x
+      x += lagX * ease
       y += (ty - y) * ease
       w += (tw - w) * ease
       h += (th - h) * ease
-      finder.style.transform = `translate3d(${x - w / 2}px, ${y - h / 2}px, 0)`
+
+      // Lean into horizontal movement while roaming; straighten up when locked or at rest
+      const targetTilt = locked ? 0 : Math.max(-MAX_TILT, Math.min(MAX_TILT, lagX * TILT_PER_PX))
+      tilt += (targetTilt - tilt) * 0.15
+
+      finder.style.transform = `translate3d(${x - w / 2}px, ${y - h / 2}px, 0) rotate(${tilt}deg)`
       finder.style.width = `${w}px`
       finder.style.height = `${h}px`
       frame = requestAnimationFrame(tick)

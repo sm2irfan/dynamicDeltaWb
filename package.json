@@ -10,7 +10,9 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -m \"Deploy site\""
+    "deploy": "gh-pages -d dist -m \"Deploy site\"",
+    "build:cpanel": "tsc -b && vite build --base=/ && %SystemRoot%\\System32\\tar.exe -a -cf site-cpanel.zip -C dist .",
+    "build:cpanel-new": "tsc -b && vite build --base=/new/ && %SystemRoot%\\System32\\tar.exe -a -cf site-cpanel-new.zip -C dist ."
   },
   "dependencies": {
     "lenis": "^1.3.25",

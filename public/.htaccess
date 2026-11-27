@@ -1,0 +1,36 @@
+# Apache config for cPanel hosting (copied into dist/ on every build).
+# GitHub Pages ignores this file.
+
+# Open index.html for the folder itself (e.g. /new/). Without this, a
+# parent site's settings (often `DirectoryIndex index.php`) can leave the
+# folder showing a file listing instead of the website.
+DirectoryIndex index.html
+
+# Never show a file listing for this folder or its subfolders (e.g. /assets/).
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Single-page app fallback: any URL that isn't a real file or folder
+  # (e.g. /about, /contact) is served index.html, and the React router
+  # shows the right page. Works at the domain root or in a subfolder.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Built files in /assets have content hashes in their names, so they can be
+# cached for a year; index.html must always be re-checked to pick up deploys.
+<IfModule mod_headers.c>
+  # Only hashed names like index-SXPxC_s0.js (Vite adds an 8-char hash)
+  <FilesMatch "-[A-Za-z0-9_-]{8}\.(js|css|jpg|jpeg|png|webp|svg|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
+</IfModule>
